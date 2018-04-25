@@ -1,0 +1,1 @@
+sqlline.bat -u "jdbc:drill:zk=local"

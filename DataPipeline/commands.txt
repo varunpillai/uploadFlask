@@ -1,0 +1,35 @@
+- build a dockerimage from dockerfile
+docker build -t jupyter:0.1 .
+docker build -t nifi:1.4.0 .
+
+- docker run a docker image
+docker run -d -p 8889:8888 --network=datapipeline -vC:\Users\Owner\Desktop\Projects:/home/jovyan/work --name jupyter0.1 jupyter:0.1
+docker run -d -p 8890:8080 --network=datapipeline -vC:\Users\Owner\Desktop\Projects:/home/nifi --name nifi1.4.0 nifi:1.4.0
+
+- get to bash in container
+docker exec -it jupyter0.1 bash
+docker exec -it --user root nifi1.4.0 bash
+
+- list all containers
+docker ps -a
+
+- stop a container
+docker stop jupyter0.1
+
+- remove container
+docker rm jupyter0.1
+
+- list all images
+docker images
+
+- remove the image
+docker rmi bbfb8aad625b
+
+- create network
+docker network create -d bridge datapipeline
+
+- list of networks
+docker network ls
+
+- token for jupyter
+jupyter notebook list

@@ -1,0 +1,26 @@
+FROM jupyter/all-spark-notebook
+MAINTAINER Varun Pillai version: 0.1
+USER root
+RUN apt-get update && apt-get install -y \
+    yum \
+    alien \
+    unixodbc-dev \
+    ssh \
+    nano \
+    iproute2
+    
+RUN wget http://package.mapr.com/tools/MapR-ODBC/MapR_Drill/MapRDrill_odbc_v1.3.8.1030/maprdrill-1.3.8.1030-1.x86_64.rpm
+
+RUN alien -i maprdrill-1.3.8.1030-1.x86_64.rpm
+
+RUN conda install -y pyodbc
+
+RUN for f in $(ls /opt/mapr/drill/Setup/); do cp /opt/mapr/drill/Setup/$f ~/.$f; done
+
+RUN pip install git+git://github.com/PythonicNinja/pydrill.git
+
+RUN pip install singer-python
+
+RUN pip install target-gsheet
+
+RUN conda install -y -c r rpy2
